@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Libros</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4a6fa5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .botones {
+            margin-bottom: 20px;
+        }
+
+        .boton {
+            display: inline-block;
+            margin-right: 10px;
+            background-color: #4a6fa5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .boton:hover {
+            background-color: #365988;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 12px;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .acciones a {
+            margin-left: 10px;
+            text-decoration: none;
+            color: #4a6fa5;
+            font-weight: bold;
+        }
+
+        .acciones a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Listado de Libros</h1>
+    </header>
+
+    <div class="container">
+        <div class="botones">
+            <a class="boton" href="{% url 'crear_libro' %}"> Crear Nuevo Libro</a>
+            <a class="boton" href="{% url 'inicio' %}" style="background-color: #777;">Volver al Inicio</a>
+        </div>
+
+        <ul>
+            {% for libro in libros %}
+                <li>
+                    {% if libro.portada %}
+                        <img src="{{ libro.portada.url }}" alt="Portada de {{ libro.titulo }}" style="height: 100px; vertical-align: middle; margin-left: 10px;">
+                    {% endif %}
+                    <span>    {{ libro.titulo }} - {{ libro.autor.nombre }} - {{ libro.genero }} - {{ libro.año }}</span>
+                    <span class="acciones">
+                        <a href="{% url 'editar_libro' libro.id %}"> Editar</a>
+                        <a href="{% url 'eliminar_libro' libro.id %}">Eliminar</a>
+                    </span>
+                </li>
+            {% empty %}
+                <li>No hay libros registrados.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <footer>
+        &copy; {{ now|date:"Y" }} Biblioteca Virtual
+    </footer>
+</body>
+</html>

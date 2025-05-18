@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Autores</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4a6fa5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .nuevo-autor {
+            display: inline-block;
+            margin-bottom: 20px;
+            background-color: #4a6fa5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .nuevo-autor:hover {
+            background-color: #365988;
+        }
+
+        .autor-lista {
+            list-style: none;
+            padding: 0;
+        }
+
+        .autor-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 15px;
+        }
+
+        .autor-foto img {
+            width: 90px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+
+        .autor-info {
+            flex-grow: 1;
+        }
+
+        .acciones a {
+            margin-left: 10px;
+            text-decoration: none;
+            color: #4a6fa5;
+            font-weight: bold;
+        }
+
+        .acciones a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Autores Registrados</h1>
+    </header>
+
+    <div class="container">
+        <a class="nuevo-autor" href="{% url 'crear_autor' %}"> Nuevo Autor</a>
+        <a class="nuevo-autor" href="{% url 'inicio' %}" style="background-color: #777; margin-left: 10px;">Volver al Inicio</a>
+
+
+        <ul class="autor-lista">
+            {% for autor in autores %}
+                <li class="autor-item">
+                    <div class="autor-foto">
+                        {% if autor.foto %}
+                            <img src="{{ autor.foto.url }}" alt="Foto de {{ autor.nombre }}">
+                        {% else %}
+                            <img src="/static/img/default-author.png" alt="Sin foto">
+                        {% endif %}
+                    </div>
+                    <div class="autor-info">
+                        <strong>{{ autor.nombre }}</strong><br>
+                        Nacionalidad: {{ autor.nacionalidad }}<br>
+                        Fecha de nacimiento: {{ autor.fecha_nacimiento }}
+                    </div>
+                    <div class="acciones">
+                        <a href="{% url 'editar_autor' autor.pk %}">✏️ Editar</a>
+                        <a href="{% url 'eliminar_autor' autor.pk %}">🗑️ Eliminar</a>
+                    </div>
+                </li>
+            {% empty %}
+                <li>No hay autores registrados.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - Biblioteca Virtual</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4a6fa5;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        main {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu li {
+            margin: 20px 0;
+        }
+
+        .menu a {
+            display: inline-block;
+            background-color: #4a6fa5;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+
+        .menu a:hover {
+            background-color: #365988;
+        }
+
+        .libros-container {
+            margin-top: 40px;
+        }
+
+        .libro {
+            background-color: white;
+            margin: 15px auto;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .libro img {
+            max-width: 100px;
+            float: right;
+            margin-left: 20px;
+            border-radius: 6px;
+        }
+
+        .libro h3 {
+            margin: 0 0 5px;
+        }
+
+        .libro p {
+            margin: 5px 0;
+        }
+
+        footer {
+            background-color: #4a6fa5;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📚 Biblioteca Virtual</h1>
+        <p>Explora autores y libros desde cualquier lugar</p>
+    </header>
+
+    <main>
+        <ul class="menu">
+            <li><a href="{% url 'listar_autores' %}">📖 Ver Autores</a></li>
+            <li><a href="{% url 'listar_libros' %}">📚 Ver Libros</a></li>
+        </ul>
+
+        <div class="libros-container">
+            <h2>Libros Recientes</h2>
+            {% for libro in libros %}
+                <div class="libro">
+                    {% if libro.portada %}
+                        <img src="{{ libro.portada.url }}" alt="Portada de {{ libro.titulo }}">
+                    {% endif %}
+                    <h3>{{ libro.titulo }}</h3>
+                    <p><strong>Autor:</strong> {{ libro.autor.nombre }}</p>
+                    <p><strong>Género:</strong> {{ libro.genero }}</p>
+                    <p><strong>Año:</strong> {{ libro.año }}</p>
+                </div>
+            {% empty %}
+                <p>No hay libros registrados.</p>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        &copy; {{ now|date:"Y" }} Biblioteca Virtual
+    </footer>
+</body>
+</html>

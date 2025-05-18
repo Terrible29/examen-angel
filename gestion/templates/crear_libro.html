@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Libro</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4a6fa5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        form p {
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #4a6fa5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #365988;
+        }
+
+        .botones {
+            margin-top: 20px;
+        }
+
+        .boton {
+            display: inline-block;
+            margin-right: 10px;
+            background-color: #777;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .boton:hover {
+            background-color: #555;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Crear un Nuevo Libro</h1>
+    </header>
+
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guardar</button>
+        </form>
+
+        <div class="botones">
+            <a class="boton" href="{% url 'listar_libros' %}"> Volver a la Lista</a>
+            <a class="boton" href="{% url 'inicio' %}">Volver al Inicio</a>
+        </div>
+    </div>
+
+    <footer>
+        &copy; {{ now|date:"Y" }} Biblioteca Virtual
+    </footer>
+</body>
+</html>
